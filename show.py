@@ -5,14 +5,14 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from parameters import a, d, eps1, eps2, Gmf, Nx, c
+from parameters import a, Nx, c
 
 num_bands = 8
 nu_max = 0.8
 
 # Choose the exact result file to plot.
 csv_filename = Path(
-    "2dpho_a=10_d=1.65_eps1=1_eps2=8.9_Nx=35_Gmf=15_20260807_130452.csv"
+    r"C:\Users\cojyi\Desktop\BIC\2dpho_a=10_d=1.65_eps1=1_eps2=8.9_Nx=35_Gmf=15_20260807_130452.csv"
 )
 if not csv_filename.is_file():
     raise FileNotFoundError(f"CSV file not found: {csv_filename}")
