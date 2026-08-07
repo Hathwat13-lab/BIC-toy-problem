@@ -1,5 +1,6 @@
 # Generated and local-only files
 __pycache__/
 da_sweep_eps15/
+과제_모범답안/
+저널/
 *.log
-
