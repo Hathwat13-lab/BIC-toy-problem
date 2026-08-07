@@ -10,16 +10,13 @@ from parameters import a, d, eps1, eps2, Gmf, Nx, c
 num_bands = 8
 nu_max = 0.8
 
-# Select the most recently written CSV for the shared parameter set.
-csv_pattern = (
-    f"2dpho_a={a:g}_d={d:g}_eps1={eps1:g}_eps2={eps2:g}_"
-    f"Nx={Nx}_Gmf={Gmf:g}_*.csv"
+# Choose the exact result file to plot.
+csv_filename = Path(
+    "2dpho_a=10_d=1.65_eps1=1_eps2=8.9_Nx=35_Gmf=15_20260807_130452.csv"
 )
-csv_files = sorted(Path(".").glob(csv_pattern))
-if not csv_files:
-    raise FileNotFoundError(f"No result CSV matches: {csv_pattern}")
+if not csv_filename.is_file():
+    raise FileNotFoundError(f"CSV file not found: {csv_filename}")
 
-csv_filename = csv_files[-1]
 data = np.loadtxt(csv_filename, delimiter=",", skiprows=1)
 
 kvecs = data[:, 1:3]
