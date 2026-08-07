@@ -6,7 +6,7 @@ from datetime import datetime
 '''변수 할당'''
 
 a = 10 #nm
-d = 0 #nm
+d = 1.65 #nm
 b = a - d
 
 Gmf = 15.0 # Gmax=dG*Gmf
