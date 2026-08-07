@@ -2,24 +2,15 @@
 
 import numpy as np
 from datetime import datetime
+from parameters import a, d, eps1, eps2, Gmf, Nx, c
 
-'''변수 할당'''
-
-a = 10 #nm
-d = 1.65 #nm
+# Shared parameters are defined in parameters.py.
 b = a - d
-
-Gmf = 15.0 # Gmax=dG*Gmf
-Nx = 35
-
-eps1=1.0
-eps2=8.9
 gamma1=eps1**-1
 gamma2=eps2**-1
 
 dk=np.pi/(Nx*a)
 dG=2*np.pi/a # 고유값은 nm**-2 꼴 
-c=3*10**5 #nm/ps...최종 c*sqrt(고유값) 하면 rad*THz 꼴
 
 '''(0~np.pi/a,0) 감마X, (0,0~np.pi/a) XM, (0~np.pi/a,0~np.pi/a) X감마 -> k그리드 생성. 각 k그리드에 대해서 수행하는거'''
 
