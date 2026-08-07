@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "BIC – 2dpho"
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "C:\\Users\\cojyi\\Desktop\\data_analysis(FFT)\\.venv\\Scripts\\python.exe",
+    "python.terminal.activateEnvironment": true,
+    "files.exclude": {
+      "**/__pycache__": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-toolsai.jupyter"
+    ]
+  }
+}
