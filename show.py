@@ -8,11 +8,11 @@ import numpy as np
 from parameters import a, Nx, c
 
 num_bands = 8
-nu_max = 1.4
+nu_max = 0.8
 
 # Choose the exact result file to plot.
 csv_filename = Path(
-    r"C:\Users\cojyi\Desktop\BIC\2dpho_a=10_d=0_eps1=1_eps2=8.9_Nx=35_Gmf=15_20260807_124708.csv"
+    r"C:\Users\cojyi\Desktop\BIC\2dpho_a=10_d=1.65_eps1=1_eps2=8.9_Nx=35_Gmf=15_20260807_130452.csv"
 )
 if not csv_filename.is_file():
     raise FileNotFoundError(f"CSV file not found: {csv_filename}")
@@ -37,8 +37,8 @@ k_path = np.concatenate(([0.0], np.cumsum(step_lengths)))
 # [0.0]과 누적합 [distance1, distance1+distance2, ...] 합쳐서 k_path 축 생성 1+106-1꼴 완성
 
 for band in range(num_bands):
-    plt.plot(k_path, TM_nu[:, band], color="blue", label="TM" if band == 0 else None)
-    plt.plot(k_path, TE_nu[:, band], color="red", label="TE" if band == 0 else None)
+    plt.plot(k_path, TM_nu[:, band], color="red", label="TE" if band == 0 else None)
+    plt.plot(k_path, TE_nu[:, band], color="blue", label="TM" if band == 0 else None)# solver 풀 때 두 모드의 label을 반대로 해서 plot 시 legend를 거꾸로 잡아줌
     #nu 값중 num_band 안의 밴드들을 플롯 후 저장해둠
     #0번째 밴드에만 labeling하기 위한 else None 처리.
 
