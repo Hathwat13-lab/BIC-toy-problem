@@ -15,7 +15,7 @@ eps2 = 8.9
 
 # Numerical parameters
 Gmf = 40.0
-Nx = 35
+Nx = 50
 
 # Speed of light in nm / ps
 c = 3 * 10**5
