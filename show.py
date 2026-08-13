@@ -12,7 +12,7 @@ nu_max = 0.8
 
 # Choose the exact result file to plot.
 csv_filename = Path(
-    r"C:\Users\cojyi\Desktop\BIC\2dpho_a=10_d=1.65_eps1=1_eps2=8.9_Nx=35_Gmf=15_20260807_130452.csv"
+    r"C:\Users\cojyi\Desktop\BIC\python_csv\2dpho_a=10_d=1.65_eps1=1_eps2=8.9_Nx=35_Gmf=15_20260807_130452.csv"
 )
 if not csv_filename.is_file():
     raise FileNotFoundError(f"CSV file not found: {csv_filename}")

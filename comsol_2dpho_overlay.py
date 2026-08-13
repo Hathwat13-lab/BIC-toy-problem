@@ -19,12 +19,12 @@ nu_max = 0.8
 num_python_bands = 8
 
 python_csv = Path(
-    r"C:\Users\cojyi\Desktop\BIC\2dpho_a=10_d=1.65_eps1=1_eps2=8.9_Nx=50_Gmf=40_20260811_182457.csv"
+    r"C:\Users\cojyi\Desktop\BIC\python_csv\2dpho_a=10_d=1.65_eps1=1_eps2=8.9_Nx=50_Gmf=40_20260811_182457.csv"
 )
-comsol_csv = Path(r"C:\Users\cojyi\Desktop\BIC\Untitled.csv")
+comsol_csv = Path(r"C:\Users\cojyi\Desktop\BIC\comsol_csv\yuin.csv")
 # Name the output after the run so reruns with a different Nx/Gmf/COMSOL
 # export don't silently overwrite a previous comparison plot.
-output_png = Path(r"C:\Users\cojyi\Desktop\BIC\comsol_2dpho_overlay_nx50_mesh.png")
+output_png = Path(r"C:\Users\cojyi\Desktop\BIC\png\comsol_2dpho_overlay_yuin.png")
 
 
 def read_2dpho_bands(filename: Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:

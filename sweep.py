@@ -24,7 +24,7 @@ def output_exists(workspace, d_value, eps2_value):
         f"2dpho_a={a:g}_d={d_value:g}_eps1={eps1:g}_eps2={eps2_value:g}_"
         f"Nx={Nx}_Gmf={Gmf:g}_*.csv"
     )
-    return next(workspace.glob(pattern), None) is not None
+    return next((workspace / "python_csv").glob(pattern), None) is not None
 
 
 def run_sweep():

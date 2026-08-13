@@ -1,5 +1,6 @@
 '''DOS 없는 구현'''
 
+import os
 import numpy as np
 from datetime import datetime
 from parameters import a, d, eps1, eps2, Gmf, Nx, c
@@ -200,9 +201,10 @@ output_data = np.column_stack((
     TM_omega_array,
 ))
 
+os.makedirs("python_csv", exist_ok=True)
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 output_filename = (
-    f"2dpho_a={a:g}_d={d:g}_eps1={eps1:g}_eps2={eps2:g}_"
+    f"python_csv/2dpho_a={a:g}_d={d:g}_eps1={eps1:g}_eps2={eps2:g}_"
     f"Nx={Nx}_Gmf={Gmf:g}_{timestamp}.csv"
 )
 

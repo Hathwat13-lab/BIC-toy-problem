@@ -10,6 +10,7 @@ def _env_float(name, default):
 # Geometry and material parameters (nm)
 a = 10.0
 d = 1.65
+r = 0.2 * a  # rod radius, used by the rods (cylinder) variant instead of d
 eps1 = 1.0
 eps2 = 8.9
 

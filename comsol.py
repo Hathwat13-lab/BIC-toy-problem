@@ -1,16 +1,16 @@
 """Plot COMSOL photonic-crystal bands along Gamma-X-M-Gamma.
 
-By default this reads 2608101808.csv next to this script.  Pass a different
-path as the first argument to plot another COMSOL export instead.
+By default this reads comsol_csv/2608101808.csv next to this script.  Pass a
+different path as the first argument to plot another COMSOL export instead.
 
 Example
 -------
 python comsol.py
-python comsol.py "C:\\Users\\cojyi\\Desktop\\BIC\\2608101808.csv"
+python comsol.py "C:\\Users\\cojyi\\Desktop\\BIC\\comsol_csv\\2608101808.csv"
 
 Optional comparison file
 ------------------------
-python comsol.py 2608101808.csv --python-bands python_bands.csv
+python comsol.py comsol_csv\\2608101808.csv --python-bands python_bands.csv
 
 ``python_bands.csv`` must have one row per k-point.  Its first column is the
 k-path coordinate and the following columns are the Python-calculated bands.
@@ -31,7 +31,7 @@ import numpy as np
 HIGH_SYMMETRY_INDICES = np.array([0, 35, 70, 105])
 HIGH_SYMMETRY_LABELS = (r"$\Gamma$", "X", "M", r"$\Gamma$")
 
-DEFAULT_COMSOL_CSV = Path(__file__).with_name("2608101808.csv")
+DEFAULT_COMSOL_CSV = Path(__file__).parent / "comsol_csv" / "2608101808.csv"
 
 
 def parse_comsol_bands(filename: Path) -> tuple[np.ndarray, np.ndarray]:
@@ -107,7 +107,7 @@ def main() -> None:
         help=f"COMSOL Global Evaluation CSV (default: {DEFAULT_COMSOL_CSV.name})",
     )
     parser.add_argument("--python-bands", type=Path, help="optional wide-format Python band CSV")
-    parser.add_argument("--output", type=Path, default=Path("band_comparison.png"))
+    parser.add_argument("--output", type=Path, default=Path("png") / "band_comparison.png")
     parser.add_argument("--ymax", type=float, default=None, help="optional y-axis upper limit")
     args = parser.parse_args()
 
