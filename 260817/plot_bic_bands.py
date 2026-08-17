@@ -79,6 +79,7 @@ def plot_band_structure(by_u: dict[float, list[tuple[complex, float]]], out_path
     ax.set_xlabel(r"Angle $\theta$ (deg)")
     ax.set_ylabel("Eigenfrequency (THz)")
     ax.set_xlim(0, max(degs))
+    ax.set_ylim(1.8, 2.6)
     ax.grid(axis="y", color="0.9", lw=0.8)
     fig.savefig(out_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
