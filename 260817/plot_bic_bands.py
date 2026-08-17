@@ -89,6 +89,7 @@ def plot_branch_q(
     bic: tuple[np.ndarray, np.ndarray, np.ndarray],
     lossy: tuple[np.ndarray, np.ndarray, np.ndarray],
     out_path: Path,
+    yscale: str = "log",
 ) -> None:
     bic_deg, bic_q, _ = bic
     lossy_deg, lossy_q, _ = lossy
@@ -98,7 +99,7 @@ def plot_branch_q(
     ax.plot(bic_deg, bic_q, "o-", color="#C62828", ms=3.5, lw=1.2, label="TE03 BIC")
     ax.set_xlabel(r"Angle $\theta$ (deg)")
     ax.set_ylabel("Q factor")
-    ax.set_yscale("log")
+    ax.set_yscale(yscale)
     ax.set_xlim(0, max(bic_deg.max(), lossy_deg.max()))
     ax.grid(axis="y", which="both", color="0.9", lw=0.8)
     ax.legend(frameon=False)
@@ -124,9 +125,13 @@ def main() -> None:
                 f"{degs[jump]:.2f} deg (Delta_f={d_freq[jump]:.4g} THz)"
             )
 
-    plot_branch_q(bic, lossy, Path(__file__).parent / "TE03_Q_vs_deg.png")
+    plot_branch_q(bic, lossy, Path(__file__).parent / "TE03_Q_vs_deg.png", yscale="log")
+    plot_branch_q(bic, lossy, Path(__file__).parent / "TE03_Q_vs_deg_linear.png", yscale="linear")
 
-    print("Saved band_structure_all_modes.png and TE03_Q_vs_deg.png")
+    print(
+        "Saved band_structure_all_modes.png, TE03_Q_vs_deg.png, "
+        "and TE03_Q_vs_deg_linear.png"
+    )
 
 
 if __name__ == "__main__":
