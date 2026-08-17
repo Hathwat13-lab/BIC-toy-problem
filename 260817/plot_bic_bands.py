@@ -90,18 +90,31 @@ def plot_branch_q(
     lossy: tuple[np.ndarray, np.ndarray, np.ndarray],
     out_path: Path,
     yscale: str = "log",
+    xmin: float = 0.0,
     xmax: float | None = None,
 ) -> None:
     bic_deg, bic_q, _ = bic
     lossy_deg, lossy_q, _ = lossy
+    xmax_eff = xmax if xmax is not None else max(bic_deg.max(), lossy_deg.max())
+
+    # Filter to the visible x-range before plotting so autoscale computes the
+    # y-limits from what's actually shown, not from points outside the crop.
+    bic_mask = (bic_deg >= xmin) & (bic_deg <= xmax_eff)
+    lossy_mask = (lossy_deg >= xmin) & (lossy_deg <= xmax_eff)
 
     fig, ax = plt.subplots(figsize=(7.2, 5.0), constrained_layout=True)
-    ax.plot(lossy_deg, lossy_q, "o-", color="#1565C0", ms=3.5, lw=1.2, label="TE03 lossy")
-    ax.plot(bic_deg, bic_q, "o-", color="#C62828", ms=3.5, lw=1.2, label="TE03 BIC")
+    ax.plot(
+        lossy_deg[lossy_mask], lossy_q[lossy_mask],
+        "o-", color="#1565C0", ms=3.5, lw=1.2, label="TE03 lossy",
+    )
+    ax.plot(
+        bic_deg[bic_mask], bic_q[bic_mask],
+        "o-", color="#C62828", ms=3.5, lw=1.2, label="TE03 BIC",
+    )
     ax.set_xlabel(r"Angle $\theta$ (deg)")
     ax.set_ylabel("Q factor")
     ax.set_yscale(yscale)
-    ax.set_xlim(0, xmax if xmax is not None else max(bic_deg.max(), lossy_deg.max()))
+    ax.set_xlim(xmin, xmax_eff)
     ax.grid(axis="y", which="both", color="0.9", lw=0.8)
     ax.legend(frameon=False)
     fig.savefig(out_path, dpi=300, bbox_inches="tight")
@@ -131,14 +144,15 @@ def main() -> None:
     plot_branch_q(
         bic,
         lossy,
-        Path(__file__).parent / "TE03_Q_vs_deg_linear_zoom0-0.5deg.png",
+        Path(__file__).parent / "TE03_Q_vs_deg_linear_zoom0.1-0.5deg.png",
         yscale="linear",
+        xmin=0.1,
         xmax=0.5,
     )
 
     print(
         "Saved band_structure_all_modes.png, TE03_Q_vs_deg.png, "
-        "TE03_Q_vs_deg_linear.png, and TE03_Q_vs_deg_linear_zoom0-0.5deg.png"
+        "TE03_Q_vs_deg_linear.png, and TE03_Q_vs_deg_linear_zoom0.1-0.5deg.png"
     )
 
 
