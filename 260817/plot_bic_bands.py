@@ -74,7 +74,7 @@ def plot_band_structure(by_u: dict[float, list[tuple[complex, float]]], out_path
             degs.append(u * 180.0 / math.pi)
             res.append(freq.real)
 
-    fig, ax = plt.subplots(figsize=(7.2, 5.0), constrained_layout=True)
+    fig, ax = plt.subplots(figsize=(3.6, 5.0), constrained_layout=True)
     ax.plot(degs, res, "o", color="#1565C0", ms=2.0, mew=0)
     ax.set_xlabel(r"Angle $\theta$ (deg)")
     ax.set_ylabel("Eigenfrequency (THz)")
