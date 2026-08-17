@@ -90,6 +90,7 @@ def plot_branch_q(
     lossy: tuple[np.ndarray, np.ndarray, np.ndarray],
     out_path: Path,
     yscale: str = "log",
+    xmax: float | None = None,
 ) -> None:
     bic_deg, bic_q, _ = bic
     lossy_deg, lossy_q, _ = lossy
@@ -100,7 +101,7 @@ def plot_branch_q(
     ax.set_xlabel(r"Angle $\theta$ (deg)")
     ax.set_ylabel("Q factor")
     ax.set_yscale(yscale)
-    ax.set_xlim(0, max(bic_deg.max(), lossy_deg.max()))
+    ax.set_xlim(0, xmax if xmax is not None else max(bic_deg.max(), lossy_deg.max()))
     ax.grid(axis="y", which="both", color="0.9", lw=0.8)
     ax.legend(frameon=False)
     fig.savefig(out_path, dpi=300, bbox_inches="tight")
@@ -127,10 +128,17 @@ def main() -> None:
 
     plot_branch_q(bic, lossy, Path(__file__).parent / "TE03_Q_vs_deg.png", yscale="log")
     plot_branch_q(bic, lossy, Path(__file__).parent / "TE03_Q_vs_deg_linear.png", yscale="linear")
+    plot_branch_q(
+        bic,
+        lossy,
+        Path(__file__).parent / "TE03_Q_vs_deg_linear_zoom0-0.5deg.png",
+        yscale="linear",
+        xmax=0.5,
+    )
 
     print(
         "Saved band_structure_all_modes.png, TE03_Q_vs_deg.png, "
-        "and TE03_Q_vs_deg_linear.png"
+        "TE03_Q_vs_deg_linear.png, and TE03_Q_vs_deg_linear_zoom0-0.5deg.png"
     )
 
 
