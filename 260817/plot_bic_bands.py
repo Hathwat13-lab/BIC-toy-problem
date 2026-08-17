@@ -13,6 +13,10 @@ Produces two figures, both saved next to this script:
    Each branch is tracked step-to-step by nearest real-frequency neighbor
    so the two curves don't swap onto neighboring modes.
 
+3. TE03_Q_vs_deg_per_degree_log.png
+   Same two branches, but sampled at one point per whole degree (0..10),
+   log-scale y-axis, with the Q value labeled at each point.
+
 Usage
 -----
 python plot_bic_bands.py
@@ -121,6 +125,54 @@ def plot_branch_q(
     plt.close(fig)
 
 
+def _format_q(q: float) -> str:
+    return f"{q:.2e}" if q >= 1e4 else f"{q:.1f}"
+
+
+def plot_branch_q_per_degree(
+    bic: tuple[np.ndarray, np.ndarray, np.ndarray],
+    lossy: tuple[np.ndarray, np.ndarray, np.ndarray],
+    out_path: Path,
+) -> None:
+    """One Q point per whole degree (0..10), log scale, value labeled at each point."""
+    bic_deg, bic_q, _ = bic
+    lossy_deg, lossy_q, _ = lossy
+    deg_ticks = np.arange(0, round(bic_deg.max()) + 1)
+
+    def sample(degs: np.ndarray, qs: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        idx = [int(np.argmin(np.abs(degs - d))) for d in deg_ticks]
+        return degs[idx], qs[idx]
+
+    bic_x, bic_y = sample(bic_deg, bic_q)
+    lossy_x, lossy_y = sample(lossy_deg, lossy_q)
+
+    fig, ax = plt.subplots(figsize=(7.2, 5.0), constrained_layout=True)
+    ax.plot(lossy_x, lossy_y, "o-", color="#1565C0", ms=5, lw=1.2, label="TE03 lossy")
+    ax.plot(bic_x, bic_y, "o-", color="#C62828", ms=5, lw=1.2, label="TE03 BIC")
+
+    for x, y in zip(bic_x, bic_y):
+        ax.annotate(
+            _format_q(y), (x, y), textcoords="offset points", xytext=(0, 8),
+            ha="center", fontsize=8, color="#C62828",
+        )
+    for x, y in zip(lossy_x, lossy_y):
+        ax.annotate(
+            _format_q(y), (x, y), textcoords="offset points", xytext=(0, -12),
+            ha="center", fontsize=8, color="#1565C0",
+        )
+
+    ax.set_xlabel(r"Angle $\theta$ (deg)")
+    ax.set_ylabel("Q factor")
+    ax.set_yscale("log")
+    ax.set_xticks(deg_ticks)
+    ax.set_xlim(deg_ticks.min() - 0.3, deg_ticks.max() + 0.3)
+    ax.margins(y=0.15)
+    ax.grid(axis="y", which="both", color="0.9", lw=0.8)
+    ax.legend(frameon=False)
+    fig.savefig(out_path, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+
+
 def main() -> None:
     by_u = load_sweep(CSV_PATH)
 
@@ -149,10 +201,12 @@ def main() -> None:
         xmin=0.1,
         xmax=0.5,
     )
+    plot_branch_q_per_degree(bic, lossy, Path(__file__).parent / "TE03_Q_vs_deg_per_degree_log.png")
 
     print(
         "Saved band_structure_all_modes.png, TE03_Q_vs_deg.png, "
-        "TE03_Q_vs_deg_linear.png, and TE03_Q_vs_deg_linear_zoom0.1-0.5deg.png"
+        "TE03_Q_vs_deg_linear.png, TE03_Q_vs_deg_linear_zoom0.1-0.5deg.png, "
+        "and TE03_Q_vs_deg_per_degree_log.png"
     )
 
 
